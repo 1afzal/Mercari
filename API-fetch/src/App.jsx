@@ -8,7 +8,7 @@ function App(){
   useEffect(()=>{
     async function fetchData(){
       try{
-      const response = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+      const response = await fetch("https://jsonplaceholder.typicode.com/todos");
       const res_data = await response.json();
       console.log(res_data);
       setData(res_data)
@@ -28,7 +28,12 @@ function App(){
     if(loading) return <h1>loading</h1>
     if(error) return <h1>Error</h1>
     return (
-      data && <h1>{data.title}</h1>
+      data && <div>{data.map((todos)=>
+      <ul>
+        <li>{todos.id}</li>
+        <li>{todos.title}</li>
+      </ul>
+      )}</div>
 
    )
 }
