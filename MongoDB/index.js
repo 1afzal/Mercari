@@ -1,0 +1,63 @@
+import { connectDB, client } from "./db.js";
+
+async function main() {
+  const db = await connectDB();
+  const users = db.collection("users");
+
+  async function insertDB() {
+    try {
+      await users.insertOne({
+        name: "afzal",
+        age: 22,
+        work: "SDE-2"
+      });
+      console.log("Inserted successfully ✅");
+    } catch (err) {
+      console.error("Error inserting:", err.message);
+    }
+  }
+
+  async function deleteDB() {
+    try {
+      await users.deleteOne({});
+      console.log("Successfully deleted all ✅");
+    } catch (err) {
+      console.error("Couldn't delete:", err.message);
+    }
+  }
+
+  async function updateDB() {
+    try {
+      const result = await users.updateOne(
+        { name: "afzal" },
+        { $set: { name: "Rishan" } }
+      );
+      if (result.matchedCount === 0) {
+        console.log("No matching document found ❌");
+      } else {
+        console.log("Successfully updated ✅");
+      }
+    } catch (err) {
+      console.error("Error updating:", err.message);
+    }
+  }
+
+  async function AgeGT(){
+    try{
+       const old = await users.findOne({age:{$gt:20}})
+       console.log(old);
+    }
+    catch(err){
+        console.log("error in finding old");
+    }
+  }
+
+  await insertDB();
+  await updateDB();
+  await AgeGT()
+
+  await client.close();
+  console.log("Connection closed 🔒");
+}
+
+main();
