@@ -52,9 +52,27 @@ async function main() {
     }
   }
 
+  async function AgeLT(){
+    try{
+        const young = await users.findOne({age:{$lt: 23}});
+        if(young){
+            console.log("Sucessfully fetched young ones")
+        }
+        else{
+            console.log("unsucessful in fetching young ones");
+        }
+        
+        console.log(young);
+    }
+    catch(err){
+        console.log("error in finding young ones")
+    }
+  }
+
   await insertDB();
   await updateDB();
   await AgeGT()
+  await AgeLT();
 
   await client.close();
   console.log("Connection closed 🔒");
