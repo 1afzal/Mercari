@@ -6,11 +6,28 @@ async function main() {
 
   async function insertDB() {
     try {
-      await users.insertOne({
-        name: "afzal",
-        age: 22,
-        work: "SDE-2"
-      });
+      await users.insertMany([
+        { "name": "afzal", "age": 22, "work": "SDE-2" },
+        { "name": "rishan", "age": 25, "work": "Frontend Developer" },
+        { "name": "hassan", "age": 19, "work": "Intern" },
+        { "name": "sana", "age": 28, "work": "Data Analyst" },
+        { "name": "mohammed", "age": 24, "work": "Backend Engineer" },
+        { "name": "aisha", "age": 21, "work": "UI/UX Designer" },
+        { "name": "faiz", "age": 26, "work": "DevOps Engineer" },
+        { "name": "rahul", "age": 23, "work": "QA Tester" },
+        { "name": "mehak", "age": 27, "work": "Project Manager" },
+        { "name": "ananya", "age": 20, "work": "Software Intern" },
+        { "name": "tariq", "age": 30, "work": "Full Stack Developer" },
+        { "name": "neha", "age": 22, "work": "Content Strategist" },
+        { "name": "zain", "age": 29, "work": "Mobile App Developer" },
+        { "name": "rehan", "age": 24, "work": "Machine Learning Engineer" },
+        { "name": "arjun", "age": 23, "work": "System Administrator" },
+        { "name": "kavya", "age": 21, "work": "Graphic Designer" },
+        { "name": "imran", "age": 31, "work": "Product Manager" },
+        { "name": "rida", "age": 19, "work": "Junior Developer" },
+        { "name": "yasir", "age": 28, "work": "Database Administrator" },
+        { "name": "zoha", "age": 26, "work": "Cloud Engineer" }]
+      )
       console.log("Inserted successfully ✅");
     } catch (err) {
       console.error("Error inserting:", err.message);
@@ -19,7 +36,7 @@ async function main() {
 
   async function deleteDB() {
     try {
-      await users.deleteOne({});
+      await users.deleteMany({});
       console.log("Successfully deleted all ✅");
     } catch (err) {
       console.error("Couldn't delete:", err.message);
@@ -69,10 +86,27 @@ async function main() {
     }
   }
 
-  await insertDB();
+  async function sort(){
+    try{
+        const res = await users.find({}).sort({age:1,name: -1}).toArray();
+        if(res){
+            console.log("found sorted")
+        }
+        else{
+            console.log("couldnt find sorted");
+        }
+        console.log(res);
+    }
+    catch(err){
+        console.log(err.message)
+    }
+  }
+//    await insertDB();
   await updateDB();
-  await AgeGT()
+  await AgeGT();
   await AgeLT();
+  await sort();
+    // await deleteDB();
 
   await client.close();
   console.log("Connection closed 🔒");
